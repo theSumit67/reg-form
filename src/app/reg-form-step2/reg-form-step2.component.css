@@ -1,0 +1,9 @@
+.alert {
+    padding: 0.25rem;
+    font-size: 72%;
+}
+.form-control {
+    padding: 0.175rem 0.35rem;
+    font-size: 0.8rem;
+    line-height: 1.2;
+}
