@@ -14,8 +14,7 @@ import { RegFormService } from '../reg-form.service';
 })
 export class RegFormComponent implements OnInit {
 
-  user : FormGroup;
-
+  user: FormGroup;
   regFormData: RegForm;
 
   constructor(
@@ -24,18 +23,25 @@ export class RegFormComponent implements OnInit {
   private fb: FormBuilder ){}
 
   ngOnInit() {
-    this.user = this.fb.group({
-      name: ['ffffff@fffffffffffffffff', [ Validators.required, Validators.minLength(3) ]],
-      email: ['ffffff@fffffffffffffffff', [ Validators.required, Validators.email ]],
-      address: ['ffffff@fffffffffffffffff', [ Validators.required, Validators.minLength(10), Validators.maxLength(100) ]]
-    });
+
+    this.regFormService.getRegFormData().subscribe((formData: RegForm)=>{
+      console.log ( 'first form' );
+      console.log ( formData  );
+
+      this.user = this.fb.group({
+        name: [ formData!.name ? formData.name : 'default name', [ Validators.required, Validators.minLength(3) ]],
+        email: [formData!.email ? formData.email : '222@email', [ Validators.required, Validators.email ]],
+        address: [formData!.address ? formData.address : 'a d d r e s s', [ Validators.required, Validators.minLength(10), Validators.maxLength(100) ]]
+      } );
+    }).unsubscribe();
+
   }
 
   get name() { return this.user.get('name'); }
   get email() { return this.user.get('email'); }
   get address() { return this.user.get('address'); }
 
-  onSubmit({ value, valid } : { value: RegForm, valid: boolean }) {
+  onSubmit({ value, valid }: { value: RegForm, valid: boolean }) {
     console.log(value, valid);
     this.regFormData = new RegForm().deserialize(value);
     console.log(this.regFormData);

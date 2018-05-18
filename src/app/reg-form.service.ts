@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RegForm, RegFormStep2  } from './reg-form.model';
-import { from,Observable,ReplaySubject, forkJoin, zip, combineLatest, merge } from 'rxjs';
-import {  } from 'rxjs/operators';
+import { Observable, ReplaySubject, zip, combineLatest } from 'rxjs';
+
 
 
 @Injectable()
@@ -12,6 +12,7 @@ export class RegFormService {
 
   constructor() {
     this.regFormData.next(false);
+    this.regFormStep2Data.next(false);
   }
 
   saveRegFormData( formData : RegForm ){
@@ -29,14 +30,14 @@ export class RegFormService {
     return this.regFormStep2Data.asObservable();
   }
 
-  getAlldata(): void{
+  getAlldata(): void {
 
     combineLatest(this.regFormData.asObservable(), this.regFormStep2Data.asObservable())
-    .subscribe(([fData,sData ]) => {
-      console.log ( Object.assign(fData, sData)  );
+    .subscribe(([fData, sData ]) => {
+      console.log ( Object.assign(fData, sData));
     }, (err) => {
-      console.error('Error occurred: ' + err)
-    });
+      console.error('Error occurred: ' + err )
+    }).unsubscribe();
 
   }
 }

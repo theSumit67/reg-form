@@ -3,8 +3,6 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styles: [ '' ]
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent  {
-  name = 'Angular 6';
-}
+export class AppComponent  {}

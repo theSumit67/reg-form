@@ -3,8 +3,7 @@
 	<div class="form-group row">
 		<label class="col-sm-3 col-form-label">Select Date</label>
 		<div class="col-sm-9">
-			<input readonly formControlName="date" class="form-control" ngbDatepicker #ngbD="ngbDatepicker" (click)="ngbD.toggle();$event.stopPropagation()"
-			 (document:click)="ngbD.isOpen() ? ngbD.close() : ''" />
+			<input readonly formControlName="date" class="form-control" bsDatepicker/>
 
 			<div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger">
         <div *ngIf="!date.errors.required && date.invalid">
@@ -65,8 +64,8 @@
 	</div>
 
 	<div class="btn-group">
-  <button type="button" [disabled]="secondaryInfo.invalid" class="btn btn-outline-dark">Previous</button>
+  <button type="button" [disabled]="secondaryInfo.invalid" class="btn btn-outline-dark" (click)="goToPrevForm()">Previous</button>
 
-	<button type="submit"  class="btn btn-outline-dark">Sign up</button>
+	<button type="submit"  [disabled]="secondaryInfo.invalid" class="btn btn-outline-dark">Sign up</button>
   </div>
 </form>
