@@ -11,21 +11,6 @@
 </div>
 
 <div>
-  <!-- 
-  <ngx-datatable
-    
-    class="material"
-    [rows]="rows"
-    [columns]="[{name:'Name'},{name:'Gender'},{name:'Company'}]"
-    [columnMode]="'force'"
-    [headerHeight]="50"
-    [footerHeight]="50"
-    [rowHeight]="'auto'"
-    [limit]="3">
-  </ngx-datatable>
-
-   -->
-  <!--  -->
 
   <ngx-datatable
     #dt
@@ -35,6 +20,7 @@
     [headerHeight]="50"
     [footerHeight]="50"
     [limit]="5"
+    [loadingIndicator]="true"
     [rowHeight]="'auto'">
     <ngx-datatable-column name="Name">
       <ng-template let-column="column" ngx-datatable-header-template>
