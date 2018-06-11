@@ -1,12 +1,16 @@
 <div>
   <br/>
-  <label for="change">Limit</label>
-  <select (change)="changeLimit($event.target.value)" class="form-control">
+  <label for="changeLimit">Limit</label>
+  <select id="changeLimit" (change)="changeLimit($event.target.value)" class="form-control">
     <option value="5">5</option>
     <option value="10">10</option>
     <option value="15">15</option>
     <option value="20">20</option>
   </select>
+  <br/>
+  <label for="toggleCol">Show all columns
+  <input type="checkbox" id="toggleCol" (click)='toggleCol(col)'/></label>
+  <br/>
   <br/>
 </div>
 
@@ -20,9 +24,23 @@
     [headerHeight]="50"
     [footerHeight]="50"
     [limit]="5"
-    [loadingIndicator]="true"
     [rowHeight]="'auto'">
-    <ngx-datatable-column name="Name">
+
+    <ngx-datatable-column *ngFor="let col of columns" [name]="col.name"></ngx-datatable-column>
+
+    <ngx-datatable-column name="Modify">
+      <ng-template let-column="column" ngx-datatable-header-template>
+        Modify
+      </ng-template>
+      <ng-template let-row="row" let-rowIndex="rowIndex"  ngx-datatable-cell-template>
+        <div class="btn-group">
+        <button (click)="editRow(row)" class="btn btn-xs btn-primary">Edit&nbsp;</button>
+        <button (click)="deleteRow(row , rowIndex)" class="btn btn-xs btn-danger">Delete {{ rowIndex }}</button>
+      </div>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <!-- <ngx-datatable-column name="Name">
       <ng-template let-column="column" ngx-datatable-header-template>
         {{column.name}}
       </ng-template>
@@ -56,7 +74,7 @@
           {{ value }}
         </details>
       </ng-template>
-    </ngx-datatable-column>
+    </ngx-datatable-column> -->
 
   </ngx-datatable>
   
