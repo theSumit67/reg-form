@@ -21,7 +21,9 @@ export class DataTableComponent implements OnInit {
 
   @ViewChild('dt') dataTable: DatatableComponent;
 
-  constructor( private dtService: DataTableService ) {
+  constructor(
+    private dtService: DataTableService,
+    public dialog: MatDialog ) {
     this.dtService.getData().subscribe(data => {
       this.temp = data[0];
       this.rows = data;
@@ -64,15 +66,18 @@ export class DataTableComponent implements OnInit {
 
   }
 
-  editRow(row): void {
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+  editRow(row, index): void {
+    const dialogRef = this.dialog.open(DialogRowEditComponent, {
       width: '250px',
-      data: { name: this.name, animal: this.animal }
+      data: row
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.animal = result;
+      const rowIndex = this.rows.findIndex(( r ) => {
+        return r.name === row.name;
+      });
+      this.rows[rowIndex] = result;
     });
 
   }
@@ -92,13 +97,34 @@ export class DataTableComponent implements OnInit {
 //
 
 @Component({
-  selector: 'dialog-row-edit',
-  templateUrl: 'dialog-row-edit.html',
+  selector: 'app-dialog-row-edit',
+  template: `
+  <h1 mat-dialog-title>Hi {{data.name}}</h1>
+  <div mat-dialog-content>
+    <p>What's your favorite animal?</p>
+    <mat-form-field>
+      <input matInput [(ngModel)]="data.name">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="data.gender">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="data.age">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="data.company">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Update</button>
+  </div>
+  `,
 })
-export class DialogRowEdit {
+export class DialogRowEditComponent {
 
   constructor(
-    public dialogRef: MatDialogRef<DialogRowEdit>,
+    public dialogRef: MatDialogRef<DialogRowEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   onNoClick(): void {

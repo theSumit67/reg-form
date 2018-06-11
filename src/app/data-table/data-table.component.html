@@ -34,8 +34,8 @@
       </ng-template>
       <ng-template let-row="row" let-rowIndex="rowIndex"  ngx-datatable-cell-template>
         <div class="btn-group">
-        <button (click)="editRow(row)" class="btn btn-xs btn-primary">Edit&nbsp;</button>
-        <button (click)="deleteRow(row , rowIndex)" class="btn btn-xs btn-danger">Delete {{ rowIndex }}</button>
+        <button (click)="editRow( row, rowIndex )" class="btn btn-xs btn-primary">Edit&nbsp;</button>
+        <button (click)="deleteRow( row , rowIndex )" class="btn btn-xs btn-danger">Delete {{ rowIndex }}</button>
       </div>
       </ng-template>
     </ngx-datatable-column>
@@ -77,5 +77,5 @@
     </ngx-datatable-column> -->
 
   </ngx-datatable>
-  
+
 </div>
